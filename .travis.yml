@@ -4,6 +4,10 @@ matrix:
   include:
     - jdk: oraclejdk8
       env: SKIP_RELEASE=false
+    - jdk: oraclejdk9
+      env: SKIP_RELEASE=true
+    - jdk: oraclejdk10
+      env: SKIP_RELEASE=true
     - jdk: oraclejdk11
       env: SKIP_RELEASE=true
 
@@ -25,4 +29,4 @@ before_install:
   - "openssl aes-256-cbc -K ${encrypted_35d5c0204248_key} -iv ${encrypted_35d5c0204248_iv} -in private.key.enc -out ./private.key -d && gpg --import ./private.key || echo"
 
 after_success:
-  - "[[ ${SKIP_RELEASE} == 'false' ]] && [[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_BRANCH} == 'master' ]] && [[ ${TRAVIS_TAG} == '' ]] && ./gradlew publish"
+  - "[[ ${SKIP_RELEASE} == 'false' ]] && ./gradlew publish"
